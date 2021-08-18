@@ -9,6 +9,13 @@ RunLoop::RunLoop() {}
 RunLoop::~RunLoop() {}
 
 void RunLoop::Run() {
+  MSG msg;
+  while (GetMessage(&msg, nullptr, 0, 0)) {
+    TranslateMessage(&msg);
+    DispatchMessage(&msg);
+  }
+
+  /*
   bool keep_running = true;
   TimePoint next_flutter_event_time = TimePoint::clock::now();
   while (keep_running) {
@@ -41,6 +48,7 @@ void RunLoop::Run() {
           std::min(next_flutter_event_time, ProcessFlutterMessages());
     }
   }
+  */
 }
 
 void RunLoop::RegisterFlutterInstance(
