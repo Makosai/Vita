@@ -21,9 +21,9 @@ class SidebarButtonTab extends StatelessWidget {
     padding: MaterialStateProperty.all<EdgeInsets>(
       EdgeInsets.fromLTRB(
         0,
-        Sizing.padding2,
+        Sizing.padding3,
         0,
-        Sizing.padding2,
+        Sizing.padding3,
       ),
     ),
   );
@@ -40,7 +40,7 @@ class SidebarButtonTab extends StatelessWidget {
       iconHeight: Sizing.icon1,
       iconColor: CurrentTheme.textSecondary,
       style: flatTabStyle,
-      textPadding: EdgeInsets.fromLTRB(Sizing.padding5, 0, 0, 0),
+      textPadding: EdgeInsets.fromLTRB(Sizing.padding4, 0, 0, 0),
       textStyle: inactiveWeight,
     );
   }

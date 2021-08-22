@@ -42,7 +42,7 @@ class ButtonIconTab extends StatelessWidget {
               width: 3, height: 30.0, curve: 3.0, color: CurrentTheme.textInfo),
           Container(
             width: iconWidth ?? 0.0 + 20.0,
-            height: 30.0,
+            height: iconHeight ?? 0.0 + 20.0,
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: Sizing.padding3),
             child: getSvg(
