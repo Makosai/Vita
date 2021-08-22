@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:vita/utils/icons.dart';
 
 class ButtonIcon extends StatelessWidget {
-  ButtonIcon({
-    this.onPressed,
-    required this.iconName,
-    this.text = "",
-    this.height,
-    this.width,
-    this.iconHeight,
-    this.iconWidth,
-    this.iconColor,
-    this.style,
-    this.textPadding = EdgeInsets.zero,
-    this.textStyle
-  });
+  ButtonIcon(
+      {this.onPressed,
+      required this.iconName,
+      this.text = "",
+      this.height,
+      this.width,
+      this.iconHeight,
+      this.iconWidth,
+      this.iconColor,
+      this.style,
+      this.textPadding = EdgeInsets.zero,
+      this.textStyle});
 
   final Function()? onPressed;
   final String iconName;
@@ -30,19 +29,22 @@ class ButtonIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: TextButton(
+    return TextButton(
         onPressed: onPressed,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            getSvg(
-              type: 'icons',
-              name: iconName,
-              height: iconHeight,
-              width: iconWidth,
-              color: iconColor,
+            Container(
+              width: iconWidth ?? 0 + 20,
+              alignment: Alignment.center,
+              child: getSvg(
+                type: 'icons',
+                name: iconName,
+                height: iconHeight,
+                width: iconWidth,
+                color: iconColor,
+              ),
             ),
             Padding(
               padding: textPadding,
@@ -54,7 +56,6 @@ class ButtonIcon extends StatelessWidget {
           ],
         ),
         style: style,
-      ),
     );
   }
 }
