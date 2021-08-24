@@ -6,11 +6,13 @@ import 'package:vita/widget/button_icon_tab.dart';
 class SidebarButtonTab extends StatelessWidget {
   SidebarButtonTab({
     this.onPressed,
+    required this.isSelected,
     required this.iconName,
     this.text = "",
   });
 
   final Function()? onPressed;
+  final Function() isSelected;
   final String iconName;
   final String text;
 
@@ -35,6 +37,7 @@ class SidebarButtonTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonIconTab(
       onPressed: onPressed,
+      isSelected: isSelected,
       iconName: iconName,
       text: text,
       iconHeight: Sizing.icon1,
