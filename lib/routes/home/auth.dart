@@ -5,5 +5,4 @@ class Auth extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text("TODO");
   }
-
 }

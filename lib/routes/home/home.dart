@@ -3,6 +3,8 @@ import 'package:vita/theme/globals.dart';
 import 'package:vita/widget/content.dart';
 import 'package:vita/widget/sidebar.dart';
 
+import 'auth.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
