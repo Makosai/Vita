@@ -1,11 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:themed/themed.dart';
+import 'dart:io';
 
-import 'widget/content.dart';
-import 'widget/sidebar.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:themed/themed.dart';
+import 'package:vita/routes/home/home.dart';
+import 'package:window_size/window_size.dart';
+import 'package:vita/routes/inbox/inbox.dart';
+import 'package:vita/theme/models.dart';
+
+import 'theme/globals.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    setWindowTitle(Globals.projectName);
+    setWindowMinSize(const Size(700, 500));
+    setWindowMaxSize(Size.infinite);
+  }
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SidebarModel()),
+      ],
+      child: MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Themed(
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: Globals.projectName,
         theme: ThemeData(
           // This is the theme of your application.
           //
@@ -28,44 +48,19 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Caros',
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(title: 'Vita'),
-      ),
-    );
-  }
-}
+        initialRoute: '/',
+        onGenerateRoute: (settings) {
+          Widget? page;
+          if (settings.name == '/') {
+            page = HomePage();
+          }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+          if (settings.name == '/inbox') {
+            page = InboxPage();
+          }
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      body: SafeArea(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[Sidebar(), Content()],
-        ),
+          return Settings.onGenerateRoute(settings, page);
+        },
       ),
     );
   }
