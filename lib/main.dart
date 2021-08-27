@@ -4,19 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:themed/themed.dart';
 import 'package:vita/routes/home/home.dart';
+import 'package:vita/theme/hive/hive.dart';
 import 'package:window_size/window_size.dart';
 import 'package:vita/routes/inbox/inbox.dart';
 import 'package:vita/theme/models.dart';
 
 import 'theme/globals.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     setWindowTitle(Globals.projectName);
     setWindowMinSize(const Size(700, 500));
     setWindowMaxSize(Size.infinite);
   }
+
+  // Hive Storage
+  await HiveConfig.initFlutter();
 
   runApp(
     MultiProvider(
