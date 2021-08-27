@@ -12,7 +12,7 @@ class SidebarButtonTab extends StatelessWidget {
   });
 
   final Function()? onPressed;
-  final Function() isSelected;
+  final bool Function() isSelected;
   final String iconName;
   final String text;
 

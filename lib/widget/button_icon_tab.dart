@@ -20,7 +20,7 @@ class ButtonIconTab extends StatelessWidget {
     this.textStyle});
 
   final Function()? onPressed;
-  final Function() isSelected;
+  final bool Function() isSelected;
   final String iconName;
   final String text;
   final double? height;
