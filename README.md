@@ -7,6 +7,7 @@ This guide is for those wanting to build the program themselves.
 ### General Setup
 1. Put your Google Client ID and Secret in the `lib/configs/config_auth.google.dart` file.
 2. This file should be ignored for changes, but double check that you're not committing it to a public git repo.
+2a. If the file updates, run `git update-index --skip-worktree lib/configs/config_auth_google.dart` on the git repo. This will ignore future changes.
 
 ### Android Setup
 Option A: Follow this [video](https://www.youtube.com/watch?v=E5WgU6ERZzA).
