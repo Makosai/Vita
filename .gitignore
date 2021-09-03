@@ -1,3 +1,7 @@
+# Security
+*.jks
+lib/configs/config_auth_google.dart
+
 # Miscellaneous
 *.class
 *.log
@@ -44,3 +48,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+lib/configs/config_auth_google.dart
