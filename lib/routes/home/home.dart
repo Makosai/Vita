@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vita/theme/globals.dart';
-import 'package:vita/widget/content.dart';
-import 'package:vita/widget/sidebar.dart';
+import 'package:vita/theme/mail/auth_google.dart';
 
-import 'auth.dart';
+import '../scaffold_wrap.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -26,18 +25,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      body: SafeArea(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [Sidebar(), Auth()],
-        ),
-      ),
-    );
+    return ScaffoldWrap(content: AuthGoogle());
   }
 }
