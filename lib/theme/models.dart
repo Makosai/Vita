@@ -11,3 +11,7 @@ class SidebarModel with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class AccountModel with ChangeNotifier {
+
+}

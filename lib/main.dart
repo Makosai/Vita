@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:themed/themed.dart';
 import 'package:vita/routes/home/home.dart';
+import 'package:vita/routes/settings/settings.dart';
 import 'package:vita/theme/hive/hive.dart';
 import 'package:window_size/window_size.dart';
 import 'package:vita/routes/inbox/inbox.dart';
@@ -61,6 +62,10 @@ class MyApp extends StatelessWidget {
 
           if (settings.name == '/inbox') {
             page = InboxPage();
+          }
+
+          if(settings.name == '/settings') {
+            page = SettingsPage();
           }
 
           return Settings.onGenerateRoute(settings, page);
