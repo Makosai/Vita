@@ -9,6 +9,7 @@ class ButtonIconTab extends StatelessWidget {
   ButtonIconTab({this.onPressed,
     required this.isSelected,
     required this.iconName,
+    this.hasDotOnSelected = false,
     this.text = "",
     this.height,
     this.width,
@@ -21,6 +22,7 @@ class ButtonIconTab extends StatelessWidget {
 
   final Function()? onPressed;
   final bool Function() isSelected;
+  final bool hasDotOnSelected;
   final String iconName;
   final String text;
   final double? height;
@@ -34,6 +36,10 @@ class ButtonIconTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return hasDotOnSelected ? buildDotButton() : buildBlankButton();
+  }
+
+  Widget buildDotButton() {
     return TextButton(
       onPressed: onPressed,
       child: Row(
@@ -53,6 +59,40 @@ class ButtonIconTab extends StatelessWidget {
             height: iconHeight ?? 0.0 + 20.0,
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: Sizing.padding3),
+            child: getSvg(
+              type: 'icons',
+              name: iconName,
+              height: iconHeight,
+              width: iconWidth,
+              color: iconColor,
+            ),
+          ),
+          Padding(
+            padding: textPadding,
+            child: Text(
+              text,
+              style: textStyle,
+            ),
+          ),
+        ],
+      ),
+      style: style,
+    );
+  }
+
+  Widget buildBlankButton()
+  {
+    return TextButton(
+      onPressed: onPressed,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: iconWidth ?? 0.0 + 20.0,
+            height: iconHeight ?? 0.0 + 20.0,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(left: Sizing.padding3 + 3.0),
             child: getSvg(
               type: 'icons',
               name: iconName,
