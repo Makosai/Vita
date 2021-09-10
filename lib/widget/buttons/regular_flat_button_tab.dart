@@ -3,8 +3,8 @@ import 'package:vita/theme/sizing.dart';
 import 'package:vita/theme/themes.dart';
 import 'package:vita/widget/button_icon_tab.dart';
 
-class SidebarButtonTab extends StatelessWidget {
-  SidebarButtonTab({
+class FlatButtonTab extends StatelessWidget {
+  FlatButtonTab({
     this.onPressed,
     required this.isSelected,
     required this.iconName,
@@ -19,7 +19,7 @@ class SidebarButtonTab extends StatelessWidget {
   final ButtonStyle flatTabStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
     foregroundColor:
-        MaterialStateProperty.all<Color>(CurrentTheme.textSecondary),
+    MaterialStateProperty.all<Color>(CurrentTheme.textSecondary),
     padding: MaterialStateProperty.all<EdgeInsets>(
       EdgeInsets.fromLTRB(
         0,
@@ -39,7 +39,6 @@ class SidebarButtonTab extends StatelessWidget {
       onPressed: onPressed,
       isSelected: isSelected,
       iconName: iconName,
-      hasDotOnSelected: true,
       text: text,
       iconHeight: Sizing.icon1,
       iconColor: CurrentTheme.textSecondary,
