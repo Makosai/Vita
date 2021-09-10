@@ -40,18 +40,24 @@ class Sidebar extends StatelessWidget {
     {
       "iconName": 'shield-exclamation',
       "text": 'Spam',
-    }
+    },
   ];
+
+  final sidebarSettings = {
+    "iconName": 'gear-regular',
+    "text": 'Settings',
+    "route": "/settings",
+  };
 
   @override
   Widget build(BuildContext context) {
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
       return Row(
-          children: [buildSidebar(context, null), Expanded(child: content!)],
+        children: [buildSidebar(context, null), Expanded(child: content!)],
       );
     }
 
-    if(content == null) {
+    if (content == null) {
       return buildSidebar(context, mobileSidebarWidth);
     }
 
@@ -61,10 +67,7 @@ class Sidebar extends StatelessWidget {
   Widget buildSidebar(BuildContext context, double? width) {
     return Container(
       width: width ?? sidebarWidth,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height,
+      height: MediaQuery.of(context).size.height,
       color: Colors.white,
       child: Column(
         children: [
@@ -81,17 +84,15 @@ class Sidebar extends StatelessWidget {
                 itemBuilder: (c, i) {
                   Map<String, String> element = sidebarButtonTabs[i];
 
-                  String? iconName = element["iconName"];
-                  String? text = element["text"];
+                  String iconName = element["iconName"]!;
+                  String text = element["text"]!;
                   String? route = element["route"];
 
                   return SidebarButtonTab(
-                    iconName: iconName!,
-                    text: text!,
+                    iconName: iconName,
+                    text: text,
                     isSelected: () {
-                      return (i == context
-                          .watch<SidebarModel>()
-                          .index);
+                      return (i == context.watch<SidebarModel>().index);
                     },
                     onPressed: () {
                       context.read<SidebarModel>().setIndex(i);
@@ -104,6 +105,26 @@ class Sidebar extends StatelessWidget {
               ),
             ),
           ),
+          () {
+            String iconName = sidebarSettings["iconName"]!;
+            String text = sidebarSettings["text"]!;
+            String? route = sidebarSettings["route"];
+
+            return SidebarButtonTab(
+              isSelected: () {
+                return (sidebarButtonTabs.length ==
+                    context.watch<SidebarModel>().index);
+              },
+              iconName: iconName,
+              text: text,
+              onPressed: () {
+                context.read<SidebarModel>().setIndex(sidebarButtonTabs.length);
+                if (route != null) {
+                  Navigator.pushNamed(context, route);
+                }
+              },
+            );
+          }()
         ],
       ),
     );
