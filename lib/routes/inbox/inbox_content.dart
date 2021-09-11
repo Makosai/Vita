@@ -14,12 +14,13 @@ class InboxContent extends StatelessWidget {
         color: CurrentTheme.content,
         alignment: Alignment.topLeft,
         child: Padding(
-            padding: EdgeInsets.all(Sizing.padding3),
-            child: ListView(
-              children: getInbox(),
-              addAutomaticKeepAlives: false,
-              cacheExtent: 100.0,
-            )),
+          padding: EdgeInsets.all(Sizing.padding3),
+          child: ListView(
+            children: getInbox(),
+            addAutomaticKeepAlives: false,
+            cacheExtent: 100.0,
+          ),
+        ),
       ),
     );
   }
