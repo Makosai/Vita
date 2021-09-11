@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:vita/utils/helpers.dart';
 import 'package:vita/widget/sidebar.dart';
 
 class ScaffoldWrap extends StatelessWidget {
@@ -10,18 +9,16 @@ class ScaffoldWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      return Scaffold(
-        body: SafeArea(
-          child: Sidebar(content: content),
-        ),
-      );
+    List<Widget> children = [content];
+
+    if (isDesktop()) {
+      children.insert(0, Sidebar());
     }
 
     return Scaffold(
-      drawer: Sidebar(content: null),
+      drawer: isDesktop() ? null : Sidebar(),
       body: SafeArea(
-        child: Sidebar(content: content),
+        child: Row(children: children),
       ),
     );
   }
