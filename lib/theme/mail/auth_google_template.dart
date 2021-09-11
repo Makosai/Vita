@@ -41,7 +41,7 @@ class AuthGoogleTemplate extends StatelessWidget {
         ),
       );
     }
-    return SizedBox.expand(
+    return Expanded(
       child: Column(
         children: [
           Text("Sign in to begin."),
