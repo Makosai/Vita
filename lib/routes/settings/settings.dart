@@ -5,13 +5,13 @@ import 'package:vita/widget/buttons/regular_flat_button_tab.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
-  var settingsTabs = {
+  final settingsTabs = {
     "iconName": "star",
     "text": "Accounts",
     "subroute": "accounts",
   };
 
-  var subroutes = {"accounts": AccountsPage()};
+  final subroutes = {"accounts": AccountsPage()};
 
   Widget buildSettingsList(BuildContext context) {
     return ListView.builder(
