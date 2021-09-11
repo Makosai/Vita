@@ -11,11 +11,6 @@ class Sidebar extends StatelessWidget {
   final double mobileSidebarWidth = 300.0;
   final double sidebarSpacing = 10.0;
 
-  static bool Function(BuildContext context, int i) isSelected =
-      (BuildContext context, int i) {
-    return (i == context.watch<SidebarModel>().index);
-  };
-
   static void Function(BuildContext? context, int? i, String? route) onPressed =
       (BuildContext? context, int? i, String? route) {
     if (context != null && i != null) {
@@ -89,6 +84,10 @@ class Sidebar extends StatelessWidget {
   }
 
   Widget buildSidebar(BuildContext context, double? width) {
+    final index = context.watch<SidebarModel>().index;
+
+    final void Function(int) setIndex = context.read<SidebarModel>().setIndex;
+
     return VerticalPanel(
       width: width ?? sidebarWidth,
       height: MediaQuery.of(context).size.height,
@@ -96,8 +95,17 @@ class Sidebar extends StatelessWidget {
       topElem: topElem,
       midScroll: midScroll,
       botElem: botElem,
-      isSelected: isSelected,
-      onPressed: onPressed,
+      isSelected: (BuildContext context, int i) {
+        return (i == index);
+      },
+      onPressed: (BuildContext? context, int? i, String? route) {
+        if (context != null && i != null) {
+          setIndex(i);
+          if (route != null) {
+            Navigator.pushNamed(context, route);
+          }
+        }
+      },
     );
   }
 }
