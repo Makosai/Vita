@@ -1,132 +1,103 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:vita/theme/models.dart';
-import 'package:vita/widget/buttons/sidebar_flat_button_tab.dart';
-import 'package:vita/widget/buttons/sidebar_flat_button.dart';
+import 'package:vita/utils/helpers.dart';
 import 'package:provider/provider.dart';
+import 'package:vita/widget/vertical_panel.dart';
 
 class Sidebar extends StatelessWidget {
-  Sidebar({Key? key, required this.content}) : super(key: key);
+  Sidebar({Key? key}) : super(key: key);
 
   final double sidebarWidth = 225.0;
   final double mobileSidebarWidth = 300.0;
   final double sidebarSpacing = 10.0;
-  final Widget? content;
 
-  final List<Map<String, String>> sidebarButtonTabs = [
-    {
-      "iconName": 'inbox',
-      "text": 'Inbox',
-      "route": "/inbox",
-    },
-    {
-      "iconName": 'file',
-      "text": 'Draft',
-      "route": "/",
-    },
-    {
-      "iconName": 'star',
-      "text": 'Starred',
-    },
-    {
-      "iconName": 'paper-plane',
-      "text": 'Sent',
-    },
-    {
-      "iconName": 'trash',
-      "text": 'Trash',
-    },
-    {
-      "iconName": 'shield-exclamation',
-      "text": 'Spam',
-    },
+  static bool Function(BuildContext context, int i) isSelected =
+      (BuildContext context, int i) {
+    return (i == context.watch<SidebarModel>().index);
+  };
+
+  static void Function(BuildContext? context, int? i, String? route) onPressed =
+      (BuildContext? context, int? i, String? route) {
+    if (context != null && i != null) {
+      context.read<SidebarModel>().setIndex(i);
+      if (route != null) {
+        Navigator.pushNamed(context, route);
+      }
+    }
+  };
+
+  final ItemInfo topElem = ItemInfo(
+    itemType: ItemType.SidebarFlat,
+    name: 'New Message',
+    iconName: 'pen-to-square',
+    onPressed: (BuildContext? context, int? i, String? route) {},
+  );
+
+  final List<ItemInfo> midScroll = [
+    ItemInfo(
+      itemType: ItemType.SidebarTab,
+      name: 'Inbox',
+      iconName: 'inbox',
+      route: '/inbox',
+    ),
+    ItemInfo(
+      itemType: ItemType.SidebarTab,
+      name: 'Draft',
+      iconName: 'file',
+      route: '/',
+    ),
+    ItemInfo(
+      itemType: ItemType.SidebarTab,
+      name: 'Starred',
+      iconName: 'star',
+      route: null,
+    ),
+    ItemInfo(
+      itemType: ItemType.SidebarTab,
+      name: 'Sent',
+      iconName: 'paper-plane',
+      route: null,
+    ),
+    ItemInfo(
+      itemType: ItemType.SidebarTab,
+      name: 'Trash',
+      iconName: 'trash',
+      route: null,
+    ),
+    ItemInfo(
+      itemType: ItemType.SidebarTab,
+      name: 'Spam',
+      iconName: 'shield-exclamation',
+      route: null,
+    ),
   ];
 
-  final sidebarSettings = {
-    "iconName": 'gear-regular',
-    "text": 'Settings',
-    "route": "/settings",
-  };
+  final ItemInfo botElem = ItemInfo(
+    itemType: ItemType.SidebarTab,
+    name: 'Settings',
+    iconName: 'gear',
+    route: '/settings',
+  );
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      return Row(
-        children: [buildSidebar(context, null), Expanded(child: content!)],
-      );
+    if (isDesktop()) {
+      return buildSidebar(context, null);
     }
 
-    if (content == null) {
-      return buildSidebar(context, mobileSidebarWidth);
-    }
-
-    return content!;
+    return buildSidebar(context, mobileSidebarWidth);
   }
 
   Widget buildSidebar(BuildContext context, double? width) {
-    return Container(
+    return VerticalPanel(
       width: width ?? sidebarWidth,
       height: MediaQuery.of(context).size.height,
       color: Colors.white,
-      child: Column(
-        children: [
-          SidebarFlatButton(
-            onPressed: () {},
-            iconName: 'pen-to-square',
-            text: 'New Message',
-          ),
-          Expanded(
-            child: Scrollbar(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: sidebarButtonTabs.length,
-                itemBuilder: (c, i) {
-                  Map<String, String> element = sidebarButtonTabs[i];
-
-                  String iconName = element["iconName"]!;
-                  String text = element["text"]!;
-                  String? route = element["route"];
-
-                  return SidebarButtonTab(
-                    iconName: iconName,
-                    text: text,
-                    isSelected: () {
-                      return (i == context.watch<SidebarModel>().index);
-                    },
-                    onPressed: () {
-                      context.read<SidebarModel>().setIndex(i);
-                      if (route != null) {
-                        Navigator.pushNamed(context, route);
-                      }
-                    },
-                  );
-                },
-              ),
-            ),
-          ),
-          () {
-            String iconName = sidebarSettings["iconName"]!;
-            String text = sidebarSettings["text"]!;
-            String? route = sidebarSettings["route"];
-
-            return SidebarButtonTab(
-              isSelected: () {
-                return (sidebarButtonTabs.length ==
-                    context.watch<SidebarModel>().index);
-              },
-              iconName: iconName,
-              text: text,
-              onPressed: () {
-                context.read<SidebarModel>().setIndex(sidebarButtonTabs.length);
-                if (route != null) {
-                  Navigator.pushNamed(context, route);
-                }
-              },
-            );
-          }()
-        ],
-      ),
+      topElem: topElem,
+      midScroll: midScroll,
+      botElem: botElem,
+      isSelected: isSelected,
+      onPressed: onPressed,
     );
   }
 }
