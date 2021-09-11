@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vita/routes/scaffold_wrap.dart';
 import 'package:vita/theme/globals.dart';
-import 'package:vita/widget/sidebar.dart';
 
 import 'inbox_content.dart';
 
@@ -65,17 +65,7 @@ class _InboxPageState extends State<InboxPage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      drawer: Sidebar(content: null),
-      body: SafeArea(
-        child: Sidebar(content: InboxContent(getInbox: getInbox)),
-      ),
-    );
+    return ScaffoldWrap(content: InboxContent(getInbox: getInbox));
   }
 }
 
