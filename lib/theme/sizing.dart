@@ -8,4 +8,8 @@ class Sizing {
 
   // Images
   static const icon1 = 18.0;
+
+  // Vertical Panel
+  static const verticalPanelWidth = 225.0;
+  static const verticalPanelWidthMobile = 300.0;
 }
