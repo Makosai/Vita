@@ -52,6 +52,7 @@ class VerticalPanel extends StatelessWidget {
   final void Function(BuildContext?, int?, String? route)? onPressed;
 
   Widget build(BuildContext context) {
+    print('Vert: ${ModalRoute.of(context)!.isCurrent}');
     return buildAll(context);
   }
 
@@ -83,7 +84,8 @@ class VerticalPanel extends StatelessWidget {
   Widget buildItemInfo(BuildContext context, ItemInfo item, int i) {
     switch (item.itemType) {
       case ItemType.SidebarTab:
-        return buildSidebarTab(context, item, i);
+        return buildRegularFlat(context, item, i);
+        // return buildSidebarTab(context, item, i);
 
       case ItemType.SidebarFlat:
         return buildSidebarFlat(context, item, i);
@@ -93,16 +95,16 @@ class VerticalPanel extends StatelessWidget {
     }
   }
 
-  bool Function() getSelectedFunc(BuildContext context, ItemInfo item, int i) {
+  bool getSelectedFunc(BuildContext context, ItemInfo item, int i) {
     if (item.isSelected != null) {
-      return () => item.isSelected!(context, i);
+      return item.isSelected!(context, i);
     }
 
     if (isSelected != null) {
-      return () => isSelected!(context, i);
+      return isSelected!(context, i);
     }
 
-    return () => false;
+    return false;
   }
 
   void Function() getPressedFunc(BuildContext context, ItemInfo item, int i) {

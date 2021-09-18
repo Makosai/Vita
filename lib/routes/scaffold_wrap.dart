@@ -9,14 +9,15 @@ class ScaffoldWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Scaff: ${ModalRoute.of(context)!.isCurrent}');
     List<Widget> children = [content];
 
-    if (isDesktop()) {
+    if (isDesktop) {
       children.insert(0, Sidebar());
     }
 
     return Scaffold(
-      drawer: isDesktop() ? null : Sidebar(),
+      drawer: isDesktop ? null : Sidebar(),
       body: SafeArea(
         child: Row(children: children),
       ),

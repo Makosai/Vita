@@ -23,14 +23,13 @@ Future<void> main() async {
   // Hive Storage
   await HiveConfig.initFlutter();
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SidebarModel()),
-      ],
-      child: MyApp(),
-    )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => SidebarModel()),
+      ChangeNotifierProvider(create: (_) => AccountsModel()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -64,7 +63,7 @@ class MyApp extends StatelessWidget {
             page = InboxPage();
           }
 
-          if(settings.name == '/settings') {
+          if (settings.name == '/settings') {
             page = SettingsPage();
           }
 

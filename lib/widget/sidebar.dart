@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vita/theme/models.dart';
+import 'package:vita/theme/themes.dart';
 import 'package:vita/utils/helpers.dart';
 import 'package:provider/provider.dart';
-import 'package:vita/widget/vertical_panel.dart';
+import 'package:vita/widget/panels/item_info.dart';
 
 class Sidebar extends StatelessWidget {
   Sidebar({Key? key}) : super(key: key);
@@ -11,24 +12,13 @@ class Sidebar extends StatelessWidget {
   final double mobileSidebarWidth = 300.0;
   final double sidebarSpacing = 10.0;
 
-  static void Function(BuildContext? context, int? i, String? route) onPressed =
-      (BuildContext? context, int? i, String? route) {
-    if (context != null && i != null) {
-      context.read<SidebarModel>().setIndex(i);
-      if (route != null) {
-        Navigator.pushNamed(context, route);
-      }
-    }
-  };
-
-  final ItemInfo topElem = ItemInfo(
+  static final ItemInfo topElem = ItemInfo(
     itemType: ItemType.SidebarFlat,
     name: 'New Message',
     iconName: 'pen-to-square',
-    onPressed: (BuildContext? context, int? i, String? route) {},
   );
 
-  final List<ItemInfo> midScroll = [
+  static final List<ItemInfo> midScroll = [
     ItemInfo(
       itemType: ItemType.SidebarTab,
       name: 'Inbox',
@@ -67,7 +57,7 @@ class Sidebar extends StatelessWidget {
     ),
   ];
 
-  final ItemInfo botElem = ItemInfo(
+  static final ItemInfo botElem = ItemInfo(
     itemType: ItemType.SidebarTab,
     name: 'Settings',
     iconName: 'gear',
@@ -76,36 +66,54 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isDesktop()) {
-      return buildSidebar(context, null);
+    if (isDesktop) {
+      return buildSidebar(context, sidebarWidth);
     }
 
     return buildSidebar(context, mobileSidebarWidth);
   }
 
-  Widget buildSidebar(BuildContext context, double? width) {
+  static bool isSelected(BuildContext context, int i) {
+    return (i == context.read<SidebarModel>().index);
+  }
+
+  static void onPressed(BuildContext? context, int? i, String? route) {
+    print("test");
+    if (context != null && i != null) {
+      context.read<SidebarModel>().setIndex(i);
+      if (route != null) {
+        Navigator.popAndPushNamed(context, route);
+      }
+    }
+  }
+
+  Widget buildSidebar(BuildContext context, double width) {
+    print('Sidebar: ${ModalRoute.of(context)!.isCurrent}');
     final index = context.watch<SidebarModel>().index;
 
-    final void Function(int) setIndex = context.read<SidebarModel>().setIndex;
-
-    return VerticalPanel(
-      width: width ?? sidebarWidth,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.white,
-      topElem: topElem,
-      midScroll: midScroll,
-      botElem: botElem,
-      isSelected: (BuildContext context, int i) {
-        return (i == index);
-      },
-      onPressed: (BuildContext? context, int? i, String? route) {
-        if (context != null && i != null) {
-          setIndex(i);
-          if (route != null) {
-            Navigator.pushNamed(context, route);
-          }
-        }
-      },
+    return Container(
+      width: width,
+      height: double.maxFinite,
+      color: CurrentTheme.canvas,
+      child: Column(children: [
+        topElem.toWidget(() {}),
+        Expanded(
+          child: Scrollbar(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: midScroll.length,
+              itemBuilder: (c, i) {
+                ItemInfo item = midScroll[i];
+                return item.toWidget(() => onPressed(context, i, item.route),
+                    isSelected: i == index);
+              },
+            ),
+          ),
+        ),
+        botElem.toWidget(
+            () => onPressed(context, midScroll.length, botElem.route),
+            isSelected: midScroll.length == index)
+      ]),
     );
   }
 }

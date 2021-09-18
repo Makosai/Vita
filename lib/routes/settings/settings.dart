@@ -1,49 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:vita/routes/scaffold_wrap.dart';
 import 'package:vita/routes/settings/accounts.dart';
 import 'package:vita/theme/models.dart';
-import 'package:vita/widget/buttons/regular_flat_button_tab.dart';
 import 'package:provider/provider.dart';
+import 'package:vita/theme/sizing.dart';
+import 'package:vita/theme/themes.dart';
+import 'package:vita/utils/helpers.dart';
+import 'package:vita/widget/vertical_panel.dart';
 
 class SettingsPage extends StatelessWidget {
-  final settingsTabs = {
-    "iconName": "star",
-    "text": "Accounts",
-    "subroute": "accounts",
-  };
+  final settingsTabs = [
+    ItemInfo(name: 'Accounts', iconName: 'star', route: 'accounts')
+  ];
 
   final subroutes = {"accounts": AccountsPage()};
 
-  Widget buildSettingsList(BuildContext context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: settingsTabs.length,
-        itemBuilder: (c, i) {
-          Map<String, String> element = settingsTabs;
-
-          String iconName = element["iconName"]!;
-          String text = element["text"]!;
-          String? subroute = element["subroute"];
-
-          return FlatButtonTab(
-            iconName: iconName,
-            text: text,
-            isSelected: () {
-              return (i == context.watch<SidebarModel>().index);
-            },
-            onPressed: () {
-              context.read<SidebarModel>().setIndex(i);
-              if (subroute != null) {
-                Navigator.pushNamed(context, subroute);
-              }
-            },
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [buildSettingsList(context)],
+    print('TestWidget: ${ModalRoute.of(context)!.isCurrent}');
+
+    List<Widget> children = [
+      VerticalPanel(
+        width: isDesktop ? Sizing.verticalPanelWidth : Sizing.verticalPanelWidthMobile,
+        height: MediaQuery.of(context).size.height,
+        topScroll: settingsTabs,
+        color: CurrentTheme.content,
+        isSelected: (BuildContext context, int i) {
+          return (i == context.watch<AccountsModel>().index);
+        },
+        onPressed: (BuildContext? context, int? i, String? route) {
+          if (context != null && i != null) {
+            context.read<AccountsModel>().setIndex(i);
+            if (route != null) {
+              if(subroutes.containsKey(route)) {
+                context.read<AccountsModel>().setView(subroutes[route]!);
+              }
+            }
+          }
+        },
+      )
+    ];
+
+    if (context.watch<AccountsModel>().view != null) {
+      children.add(context.read<AccountsModel>().view!);
+    }
+
+    return ScaffoldWrap(
+      content: Row(
+        children: children,
+      ),
     );
   }
 }
