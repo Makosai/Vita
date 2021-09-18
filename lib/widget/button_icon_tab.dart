@@ -21,7 +21,7 @@ class ButtonIconTab extends StatelessWidget {
     this.textStyle});
 
   final Function()? onPressed;
-  final bool Function() isSelected;
+  final bool isSelected;
   final bool hasDotOnSelected;
   final String iconName;
   final String text;
@@ -47,7 +47,7 @@ class ButtonIconTab extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Opacity(
-            opacity: isSelected() ? 1 : 0,
+            opacity: isSelected ? 1 : 0,
             child: RoundedHalfBox(
                 width: 3,
                 height: 30.0,

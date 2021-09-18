@@ -12,7 +12,7 @@ class FlatButtonTab extends StatelessWidget {
   });
 
   final Function()? onPressed;
-  final bool Function() isSelected;
+  final bool isSelected;
   final String iconName;
   final String text;
 
