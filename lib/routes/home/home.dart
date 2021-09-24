@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vita/theme/globals.dart';
-import 'package:vita/theme/mail/auth_google.dart';
 
 import '../scaffold_wrap.dart';
 
@@ -25,6 +24,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWrap(content: AuthGoogle());
+    return ScaffoldWrap(content: Text("Home"));
   }
 }
