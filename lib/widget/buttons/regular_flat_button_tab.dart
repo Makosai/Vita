@@ -16,22 +16,14 @@ class FlatButtonTab extends StatelessWidget {
   final String iconName;
   final String text;
 
-  final ButtonStyle flatTabStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-    foregroundColor:
-    MaterialStateProperty.all<Color>(CurrentTheme.textSecondary),
-    padding: MaterialStateProperty.all<EdgeInsets>(
-      EdgeInsets.fromLTRB(
-        0,
-        Sizing.padding3,
-        0,
-        Sizing.padding3,
-      ),
-    ),
+  final ButtonStyle flatTabStyle = TextButton.styleFrom(
+    backgroundColor: Colors.transparent,
+    primary: CurrentTheme.textTertiary,
+    padding: EdgeInsets.symmetric(vertical: Sizing.padding3),
   );
 
-  final TextStyle inactiveWeight = TextStyle(fontWeight: FontWeight.w400);
-  final TextStyle activeWeight = TextStyle(fontWeight: FontWeight.w800);
+  static const TextStyle inactiveWeight = TextStyle(fontWeight: FontWeight.w400);
+  static const TextStyle activeWeight = TextStyle(fontWeight: FontWeight.w800);
 
   @override
   Widget build(BuildContext context) {

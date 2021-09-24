@@ -4,7 +4,7 @@ import 'package:vita/theme/themes.dart';
 import 'package:vita/widget/button_icon.dart';
 
 class SidebarFlatButton extends StatelessWidget {
-  SidebarFlatButton({
+  const SidebarFlatButton({
     this.onPressed,
     required this.iconName,
     this.text = "",
@@ -14,30 +14,22 @@ class SidebarFlatButton extends StatelessWidget {
   final String iconName;
   final String text;
 
-  final ButtonStyle flatButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(CurrentTheme.btnNeutral),
-    foregroundColor: MaterialStateProperty.all<Color>(CurrentTheme.textPrimary),
-    padding: MaterialStateProperty.all<EdgeInsets>(
-      EdgeInsets.fromLTRB(
-        Sizing.padding1,
-        Sizing.padding2,
-        Sizing.padding1,
-        Sizing.padding2,
-      ),
-    ),
+  static final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+    backgroundColor: CurrentTheme.btnNeutral,
+    primary: CurrentTheme.textPrimary,
+    padding: EdgeInsets.symmetric(vertical: Sizing.padding2),
   );
 
-  final TextStyle activeWeight = TextStyle(fontWeight: FontWeight.w800);
-  final TextStyle inactiveWeight = TextStyle(fontWeight: FontWeight.w400);
+  static const TextStyle activeWeight = TextStyle(fontWeight: FontWeight.w800);
+  static const TextStyle inactiveWeight =
+      TextStyle(fontWeight: FontWeight.w400);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(
-        Sizing.padding5,
-        Sizing.padding3,
-        Sizing.padding5,
-        Sizing.padding3,
+      margin: const EdgeInsets.symmetric(
+        horizontal: Sizing.padding5,
+        vertical: Sizing.padding3,
       ),
       child: ButtonIcon(
         onPressed: onPressed,
@@ -46,7 +38,7 @@ class SidebarFlatButton extends StatelessWidget {
         iconHeight: Sizing.icon1,
         iconColor: CurrentTheme.textPrimary,
         style: flatButtonStyle,
-        textPadding: EdgeInsets.fromLTRB(Sizing.padding4, 0, 0, 0),
+        textPadding: const EdgeInsets.fromLTRB(Sizing.padding5, 0, 0, 0),
         textStyle: activeWeight,
       ),
     );

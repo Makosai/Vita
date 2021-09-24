@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vita/utils/icons.dart';
 
 class ButtonIcon extends StatelessWidget {
-  ButtonIcon(
+  const ButtonIcon(
       {this.onPressed,
       required this.iconName,
       this.text = "",
