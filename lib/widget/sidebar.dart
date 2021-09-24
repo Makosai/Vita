@@ -1,55 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:vita/theme/models.dart';
+import 'package:vita/theme/sizing.dart';
 import 'package:vita/theme/themes.dart';
 import 'package:vita/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:vita/widget/panels/item_info.dart';
 
 class Sidebar extends StatelessWidget {
-  Sidebar({Key? key}) : super(key: key);
+  const Sidebar({Key? key}) : super(key: key);
 
-  final double sidebarWidth = 225.0;
-  final double mobileSidebarWidth = 300.0;
-  final double sidebarSpacing = 10.0;
+  static const double sidebarSpacing = 10.0;
 
-  static final ItemInfo topElem = ItemInfo(
+  //region Elems
+  static const ItemInfo topElem = const ItemInfo(
     itemType: ItemType.SidebarFlat,
     name: 'New Message',
     iconName: 'pen-to-square',
   );
 
-  static final List<ItemInfo> midScroll = [
-    ItemInfo(
+  static const List<ItemInfo> midScroll = [
+    const ItemInfo(
       itemType: ItemType.SidebarTab,
       name: 'Inbox',
       iconName: 'inbox',
       route: '/inbox',
     ),
-    ItemInfo(
+    const ItemInfo(
       itemType: ItemType.SidebarTab,
       name: 'Draft',
       iconName: 'file',
       route: '/',
     ),
-    ItemInfo(
+    const ItemInfo(
       itemType: ItemType.SidebarTab,
       name: 'Starred',
       iconName: 'star',
       route: null,
     ),
-    ItemInfo(
+    const ItemInfo(
       itemType: ItemType.SidebarTab,
       name: 'Sent',
       iconName: 'paper-plane',
       route: null,
     ),
-    ItemInfo(
+    const ItemInfo(
       itemType: ItemType.SidebarTab,
       name: 'Trash',
       iconName: 'trash',
       route: null,
     ),
-    ItemInfo(
+    const ItemInfo(
       itemType: ItemType.SidebarTab,
       name: 'Spam',
       iconName: 'shield-exclamation',
@@ -57,63 +57,65 @@ class Sidebar extends StatelessWidget {
     ),
   ];
 
-  static final ItemInfo botElem = ItemInfo(
+  static const ItemInfo botElem = const ItemInfo(
     itemType: ItemType.SidebarTab,
     name: 'Settings',
     iconName: 'gear',
     route: '/settings',
   );
+  //endregion
 
   @override
   Widget build(BuildContext context) {
-    if (isDesktop) {
-      return buildSidebar(context, sidebarWidth);
-    }
-
-    return buildSidebar(context, mobileSidebarWidth);
-  }
-
-  static bool isSelected(BuildContext context, int i) {
-    return (i == context.read<SidebarModel>().index);
-  }
-
-  static void onPressed(BuildContext? context, int? i, String? route) {
-    print("test");
-    if (context != null && i != null) {
-      context.read<SidebarModel>().setIndex(i);
-      if (route != null) {
-        Navigator.popAndPushNamed(context, route);
+    void onPressed(BuildContext? context, int? i, String? route) {
+      print("test");
+      if (context != null && i != null) {
+        context.read<SidebarModel>().setIndex(i);
+        if (route != null) {
+          Navigator.popAndPushNamed(context, route);
+        }
       }
     }
-  }
 
-  Widget buildSidebar(BuildContext context, double width) {
-    print('Sidebar: ${ModalRoute.of(context)!.isCurrent}');
-    final index = context.watch<SidebarModel>().index;
+    Widget buildSidebar(BuildContext context, double width) {
+      print('Sidebar: ${ModalRoute.of(context)!.isCurrent}');
+      final index = context.watch<SidebarModel>().index;
 
-    return Container(
-      width: width,
-      height: double.maxFinite,
-      color: CurrentTheme.canvas,
-      child: Column(children: [
-        topElem.toWidget(() {}),
-        Expanded(
-          child: Scrollbar(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: midScroll.length,
-              itemBuilder: (c, i) {
-                ItemInfo item = midScroll[i];
-                return item.toWidget(() => onPressed(context, i, item.route),
-                    isSelected: i == index);
-              },
+      return Container(
+        width: width,
+        height: double.maxFinite,
+        color: CurrentTheme.canvas,
+        child: Column(
+          children: [
+            topElem.toWidget(() {}),
+            Expanded(
+              child: Scrollbar(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: midScroll.length,
+                  itemBuilder: (c, i) {
+                    ItemInfo item = midScroll[i];
+                    return item.toWidget(
+                          () => onPressed(context, i, item.route),
+                      isSelected: i == index,
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
+            botElem.toWidget(
+                  () => onPressed(context, midScroll.length, botElem.route),
+              isSelected: midScroll.length == index,
+            ),
+          ],
         ),
-        botElem.toWidget(
-            () => onPressed(context, midScroll.length, botElem.route),
-            isSelected: midScroll.length == index)
-      ]),
-    );
+      );
+    }
+
+    if (isDesktop) {
+      return buildSidebar(context, Sizing.verticalPanelWidth);
+    }
+
+    return buildSidebar(context, Sizing.verticalPanelWidthMobile);
   }
 }
