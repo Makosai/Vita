@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Caros',
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/',
+        initialRoute: '/settings',
         onGenerateRoute: (settings) {
           Widget? page;
           if (settings.name == '/') {
