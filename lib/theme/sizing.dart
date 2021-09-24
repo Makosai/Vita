@@ -5,6 +5,7 @@ class Sizing {
   static const padding3 = 16.0;
   static const padding4 = 14.0;
   static const padding5 = 10.0;
+  static const padding6 = 8.0;
 
   // Images
   static const icon1 = 18.0;
