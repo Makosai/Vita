@@ -15,7 +15,7 @@ class ItemInfo {
   final String? iconName;
   final String? route;
 
-  ItemInfo({
+  const ItemInfo({
     this.itemType = ItemType.RegularFlat,
     this.name = "",
     this.iconName,
