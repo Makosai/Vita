@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SidebarModel with ChangeNotifier, DiagnosticableTreeMixin {
-  int _index = -1;
+  int _index = 6; // Set to Sidebar for now.
 
   int get index => _index;
 
