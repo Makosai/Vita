@@ -4,8 +4,10 @@ import 'package:themed/themed.dart';
 class LightTheme {
   static const textPrimary = Color(0xFF080816);
   static const textSecondary = Color(0xff8f8ea1);
+  static const textTertiary = Color(0xffcfdae6);
   static const textInfo = Color(0xff1f75ff);
   static const canvas = Color(0xffffffff);
+  static const canvasSecondary = Color(0xff1e2532);
   static const content = Color(0xff8f8ea1);
   static const btnNeutral = Color(0xfff1f0f5);
 }
@@ -14,8 +16,10 @@ class DarkTheme {
   // TODO: Replace the dark theme colors with a proper theme.
   static const textPrimary = Color(0xFF080816);
   static const textSecondary = Color(0xff8f8ea1);
+  static const textTertiary = Color(0xffcfdae6);
   static const textInfo = Color(0xff1f75ff);
   static const canvas = Color(0xffffffff);
+  static const canvasSecondary = Color(0xff1e2532);
   static const content = Color(0xff8f8ea1);
   static const btnNeutral = Color(0xfff1f0f5);
 }
@@ -23,8 +27,10 @@ class DarkTheme {
 class CurrentTheme {
   static const textPrimary = ColorRef(Color(0xFF080816));
   static const textSecondary = ColorRef(Color(0xff8f8ea1));
+  static const textTertiary = ColorRef(Color(0xffcfdae6));
   static const textInfo = ColorRef(Color(0xff1f75ff));
   static const canvas = ColorRef(Color(0xffffffff));
+  static const canvasSecondary = ColorRef(Color(0xff1e2532));
   static const content = ColorRef(Color(0xffebeaef));
   static const content2 = ColorRef(Color(0xff8f8ea1));
   static const btnNeutral = ColorRef(Color(0xfff1f0f5));
